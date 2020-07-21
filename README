@@ -1,0 +1,56 @@
+Tema 3 - PC
+Mihu Florin - 324CC
+
+    In fisierul client.cpp se pot da urmatoarele comenzi: register, login, 
+enter_library, get_books, add_book, get_book, delete_book, logout, exit. 
+Oricare dintre aceste comenzi poate fi citita de la tastatura, in urma citirii 
+acesteia realizandu-se o cerere de tip HTTP ce urmeaza a fi trimisa catre un 
+server deja implementat sub forma unui REST API.
+    Daca comanda primita este de tip register, atunci urilizatorul trebuie sa 
+completeze campurile de nume si parola. Se creeaza o cerere de tip POST, 
+continutul acesteia fiind format dintr-un JSON ce contine numele si parola 
+introduse. Daca in raspunsul serverului apare o eroare (nume de utilizator deja 
+existent), atunci aceasta eroare va fi afisata pe ecran, in caz contrar, va 
+aparea un mesaj ce il instiinteaza pe client ca utilizatorul a fost creat cu 
+succes.
+    Pentru comanda de login, utilizatorul va trebui sa isi introduca numele si 
+parola in campurile specifice. Apoi, se creeaza o cerere HTTP de tip POST, in 
+corpul careia se afla un JSON cu numele si parola introduse. Daca numele sau 
+parola este gresita, clientul va fi anuntat, altfel, acesta va primi un mesaj 
+ca s-a autentificat, iar cookie-ul primit va fi extras si salvat.
+    Pentru accesul in biblioteca (comanda enter_library), se trimite o cerere 
+de tip GET, in corpul careia se regaseste cookie-ul utilizatorului. Daca acesta 
+este corect, serverul va raspunde cu un JWT token, ce va fi parsat si salvat, 
+altfel, pe ecran se va afisa o eroare. Utilizatorul va fi marcat ca a intrat in 
+biblioteca.
+    Pentru comanda get_books, se verifica daca utilizatorul se afla deja in 
+biblioteca. Se trimite catre server o cerere HTTP de tip GET ce cuprinde si 
+token-ul JWT primit la intrarea in biblioteca. Daca token-ul nu exista sau nu 
+este corect se afiseaza pe ecran o eroare corespunzatoare, in caz contrar se 
+afiseaza lista cu cartile utilizatorului curent.    
+    Comanda get_book face o cerere de tip GET, ce contine tokenul JWT 
+corespunzator, dupa ce utilizatorul introduce ID-ul cartii dorite. Daca ce a 
+introdus nu este un numar sau ID-ul nu exista se afiseaza o eroare specifica, 
+altfel pe ecran apar detalii despre carte.
+    Pentru comanda add_book, se verifica intai daca clientul se afla deja in 
+biblioteca. Daca acesta se afla, atunci el trebuie sa introduca informatii 
+despre cartea pe care vrea sa o adauge in biblioteca. Apoi se trimite o cerere 
+POST catre server. Daca exista o eroare la introducerea cartii (ex: Nu a fost 
+introdusa o valoare numerica la campul cu numarul de pagini), aceasta va fi 
+afisata. De asemenea, se verifica daca utilizatorul a facut prea multe cereri 
+in ultimele 15 min. Daca da, acesta va fi instiintat cu o eroare, in caz 
+contrar, cartea se adauga in colectie.
+    Comanda delete_book verifica initial daca clientul este in biblioteca. Daca 
+se afla, trebuie sa introduca ID-ul cartii pe care doreste sa o stearga. Se 
+realizeaza, apoi, un request HTTP de tip DELETE ce contine ID-ul primit. Daca 
+ID-ul exista, cartea va fi stearsa din biblioteca, in caz contrar, va aparea o 
+eroare.
+    Comanda de logout se face cu ajutorul unui request de tip GET, ce trebuie 
+sa contina cookie-ul clientului. Daca cookie-ul introdus este corect si 
+utilizatorul este logat, atunci se va face delogarea sa, altfel, se va printa o 
+eroare.
+    Comanda de exit intrerupe bucla infinita in care se citeau comenzile.
+
+
+    Am ales sa folosesc biblioteca prezentata in enunt, nlohmann, pentru lucrul 
+cu JSON in C++.
