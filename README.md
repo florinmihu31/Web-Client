@@ -12,5 +12,5 @@
 
 ### Languages
 
-* The application was built using C++, alongside C libraries for Internet operations
+* The application was built using C++, alongside C libraries for Internet operations.
 * The library used for JSON parsing was *nlohmann*.
